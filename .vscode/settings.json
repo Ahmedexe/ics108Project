@@ -1,0 +1,23 @@
+{
+  "java.project.sourcePaths": ["src"],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.base.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.controls.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.fxml.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.graphics.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.media.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.swing.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx.web.jar",
+    "c:\\KFUPM\\ICS108\\javaFx\\javafx-sdk-21.0.1\\lib\\javafx-swt.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.base.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.controls.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.fxml.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.graphics.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.media.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.swing.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx.web.jar",
+    "d:\\DOCS\\KFUPM\\Academia\\231\\ICS108\\Project\\javafx-sdk-21.0.1\\lib\\javafx-swt.jar"
+  ]
+}
