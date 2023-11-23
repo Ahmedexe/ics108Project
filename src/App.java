@@ -1,22 +1,12 @@
 
-import javax.swing.plaf.ButtonUI;
-
 import javafx.application.Application;
-import javafx.scene.Node;
-// import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
+import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
-// import javafx.scene.control.Label;
-// import javafx.scene.image.Image;
-// import javafx.scene.image.ImageView;
-// import javafx.scene.layout.Border;
-// import javafx.scene.layout.BorderPane;
-// import javafx.scene.layout.HBox;
-// import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -24,68 +14,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
-// commit this
+import javafx.scene.text.FontWeight;
 
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
-        /*
-         * // Outer StackPane
-         * StackPane outerPane = new StackPane();
-         * 
-         * // Inner StackPane
-         * StackPane innerPane = new StackPane();
-         * innerPane.setStyle("-fx-background-color: lightblue;");
-         * 
-         * // Button inside the inner StackPane
-         * Button button = new Button("Click me!");
-         * 
-         * // Adding the Button to the inner StackPane
-         * innerPane.getChildren().add(button);
-         * 
-         * // Adding the inner StackPane to the outer StackPane
-         * outerPane.getChildren().add(innerPane);
-         * 
-         * // Create a Scene and set it on the Stage
-         * Scene scene = new Scene(outerPane, 300, 200);
-         * primaryStage.setScene(scene);
-         * 
-         * // Set the title and show the Stage
-         * primaryStage.setTitle("Nested Pane Example");
-         * primaryStage.show();
-         * 
-         * 
-         * 
-         * BorderPane bp = new BorderPane();
-         * HBox leftP = new HBox();
-         * VBox topP = new VBox();
-         * 
-         * int x = 30;
-         * 
-         * topP.setPadding(new Insets(x, x, x, x));
-         * leftP.setPadding(new Insets(x, x, x, x));
-         * 
-         * 
-         * 
-         * topP.setStyle("-fx-background-color: lightblue;");
-         * leftP.setStyle("-fx-background-color: lightblue;");
-         * 
-         * bp.setCenter(new Label("Any"));
-         * bp.setLeft(leftP);
-         * bp.setTop(topP);
-         * 
-         * Scene scene = new Scene(bp, 500, 500);
-         * primaryStage.setScene(scene);
-         * 
-         */
-
-
-
-        // Declare background As a BorderPane, left bar as vbox, top bar as hbox, Center Section as BorderPane
+       
+        // Declare background As a BorderPane, left bar as vbox, top bar as hbox, Center
+        // Section as BorderPane
         BorderPane background = new BorderPane();
         VBox leftBar = new VBox();
         HBox topBar = new HBox();
         BorderPane centerSection = new BorderPane();
+
+        background.setMargin(centerSection, new Insets(20));
 
 
         // Set Dimensions and Colors for topBar and leftBar
@@ -95,26 +37,35 @@ public class App extends Application {
 
         background.setLeft(leftBar);
         background.setTop(topBar);
+        background.setCenter(centerSection);
 
         leftBar.setStyle("-fx-background-color: lightgrey;");
         topBar.setStyle("-fx-background-color: lightgrey;");
 
+
+
+
+
         // ####################### topBar Contents ######################
 
-        HBox nameBox = new HBox(10);
-        nameBox.setAlignment(Pos.CENTER);
+        HBox nameBox = new HBox(10); // Spacing of value 10
+        nameBox.setAlignment(Pos.CENTER); // set to center
 
+        // **** TextField Implementation ****
         TextField nameTextField = new TextField();
         Label nameLabel = new Label("Name");
         nameTextField.setPrefWidth(175);
         nameLabel.setFont(new Font(15));
 
+        // **** Add Button Implementation ****
         Button addBtn = new Button("Add");
         addBtn.setPrefWidth(80);
 
+        // **** Delete Button Implementation ****
         Button delBtn = new Button("Delete");
         delBtn.setPrefWidth(80);
 
+        // **** Look Up Button Implementation ****
         Button lookUpBtn = new Button("Look Up");
         lookUpBtn.setPrefWidth(80);
 
@@ -129,20 +80,21 @@ public class App extends Application {
         topBar.getChildren().add(delBtn);
         topBar.getChildren().add(lookUpBtn);
 
-
-
         // -- top bar DONE!
 
-        // ###################### leftBar contents ################
 
+
+
+
+    
+        // ###################### leftBar contents ################
 
         VBox changeStatBox = new VBox(10); // Container for the TextField and the Button
         TextField changeStatTextField = new TextField(); // TextField
         Button changeStatBtn = new Button("Change Status"); // Button
 
-        // set the dimenstions and append the nodes to changeStatBox
+        // set the dimensions and append the nodes to changeStatBox
         setLeftBarContents(changeStatBox, changeStatTextField, changeStatBtn);
-
 
         // As the previous
         VBox changePicBox = new VBox(10);
@@ -151,7 +103,6 @@ public class App extends Application {
 
         setLeftBarContents(changePicBox, changePicTextField, changePicBtn);
 
-
         // As the previous
         VBox addFriendBox = new VBox(10);
         TextField addFriendTextField = new TextField();
@@ -159,18 +110,18 @@ public class App extends Application {
 
         setLeftBarContents(addFriendBox, addFriendTextField, addFriendBtn);
 
-
         // As the previous
         leftBar.setAlignment(Pos.CENTER);
         leftBar.setSpacing(100);
         leftBar.getChildren().addAll(changeStatBox, changePicBox, addFriendBox);
 
-
         // -- leftBar DONE!
 
 
+
+
         // ################ Center Section Contents ####################
-        /* 
+        /*
          * Divide the center to 3 subsections as follow:-
          * 
          * 
@@ -181,7 +132,59 @@ public class App extends Application {
          * bottom ---> interactive text
          */
 
-         
+        VBox leftCenterBox = new VBox(20);
+        VBox rightCenterBox = new VBox(5);
+        StackPane bottomCenterBox = new StackPane();
+
+        centerSection.setLeft(leftCenterBox);
+        centerSection.setBottom(bottomCenterBox);
+        centerSection.setCenter(rightCenterBox);
+
+
+
+
+        // **** leftCenterBox Implmetation ****
+
+        // Profile Name
+        Label profileName = new Label("Moh Ali");
+        profileName.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+
+        // Profile Picture
+        StackPane profilePic = new StackPane();
+        noImgPreview(profilePic); // set a noImg preview when no picture provided
+
+        // Profile Status
+        Label profileStatus = new Label("No current status");
+        profileStatus.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+
+        // add all nodes to leftCenterBox
+        leftCenterBox.getChildren().addAll(profileName, profilePic, profileStatus);
+
+
+
+
+
+        // **** bottomCenterBox Implementation ****
+
+        // updates bar label
+        Label updatesBarText = new Label("NONE");
+        updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+
+        bottomCenterBox.getChildren().addAll(updatesBarText);
+
+
+
+        // **** rightCenterBox Implementation ****
+        centerSection.setMargin(rightCenterBox, new Insets(40, 0, 0, 70));
+
+        Label friendsText = new Label("Friends:");
+        friendsText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+
+        rightCenterBox.setAlignment(Pos.TOP_LEFT);
+        rightCenterBox.getChildren().addAll(friendsText);
+
+        // centerSection DONE!
+
 
 
         // ############## Set scene and Display the Stage ######################
@@ -197,12 +200,30 @@ public class App extends Application {
         launch(args);
     }
 
+    // left bar construction submethod (helper method)
     public static void setLeftBarContents(VBox vbox, TextField txt, Button btn) {
         txt.setPrefWidth(200);
         btn.setPrefWidth(200);
 
         vbox.getChildren().add(txt);
         vbox.getChildren().add(btn);
+    }
+
+    // update img to noImg preview (helper method)
+    public static void noImgPreview(StackPane profilePic) {
+
+        // rectangle as a frame
+        Rectangle rect = new Rectangle(225, 225);
+        rect.setFill(null);
+        rect.setStroke(Color.BLACK);
+        rect.setStrokeWidth(2);
+
+        // No Image text
+        Label noImg = new Label("No Image");
+        noImg.setFont(Font.font("Segoe UI", FontWeight.BOLD, 20));
+
+        profilePic.getChildren().clear(); // clear any other children
+        profilePic.getChildren().addAll(rect, noImg);
     }
 
 }
