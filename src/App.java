@@ -1,9 +1,12 @@
 
+
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Rectangle;
@@ -15,17 +18,27 @@ import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.image.Image;
 
 public class App extends Application {
+
+    private Label statusLabel;
+    private VBox friendsList;
+
     @Override
     public void start(Stage primaryStage) {
-       
+
         // Declare background As a BorderPane, left bar as vbox, top bar as hbox, Center
         // Section as BorderPane
         BorderPane background = new BorderPane();
         VBox leftBar = new VBox();
         HBox topBar = new HBox();
         BorderPane centerSection = new BorderPane();
+        statusLabel = new Label("Status: ");
+        friendsList = new VBox(10); // VBox with spacing for friends list
+
+
+
 
         background.setMargin(centerSection, new Insets(20));
 
@@ -82,11 +95,6 @@ public class App extends Application {
 
         // -- top bar DONE!
 
-
-
-
-
-    
         // ###################### leftBar contents ################
 
         VBox changeStatBox = new VBox(10); // Container for the TextField and the Button
@@ -123,12 +131,12 @@ public class App extends Application {
         // ################ Center Section Contents ####################
         /*
          * Divide the center to 3 subsections as follow:-
-         * 
-         * 
+         *
+         *
          * left ---> for profile name, profile img, status
-         * 
+         *
          * center ---> friends
-         * 
+         *
          * bottom ---> interactive text
          */
 
@@ -143,36 +151,205 @@ public class App extends Application {
 
 
 
-        // **** leftCenterBox Implmetation ****
+        // **** leftCenterBox Implmentation ****
+        StackPane profilePicPane = new StackPane();
+        leftCenterBox.getChildren().add(profilePicPane);
 
-        // Profile Name
-        Label profileName = new Label("Moh Ali");
-        profileName.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+        addBtn.setOnAction(e -> {  // **************** Button to add a profile ******************
 
-        // Profile Picture
-        StackPane profilePic = new StackPane();
-        noImgPreview(profilePic); // set a noImg preview when no picture provided
-
-        // Profile Status
-        Label profileStatus = new Label("No current status");
-        profileStatus.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
-
-        // add all nodes to leftCenterBox
-        leftCenterBox.getChildren().addAll(profileName, profilePic, profileStatus);
+            String name = nameTextField.getText();
+            Image image = new Image("https://res.cloudinary.com/dvvdmrdfx/image/upload/v1700988935/Screenshot_2023-11-25_214542-removebg-preview_xhmqhh.png");
+            String status = "No current status "; // Default status
+            leftCenterBox.getChildren().clear();
+            bottomCenterBox.getChildren().clear();
+            rightCenterBox.getChildren().clear();
+            boolean isAdded = Person.addProfile(name, image, status);
 
 
+            if (isAdded) {
+                // Clear previous content
+                leftCenterBox.getChildren().clear();
+
+                // Add profile name
+                Label profileName = new Label(name);
+                profileName.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+                profileName.setTextFill(Color.BLUE);
+                leftCenterBox.getChildren().add(profileName);
+
+                // Add "No Image" preview
+                noImgPreview(profilePicPane); // Assuming profilePicPane is a StackPane
+                leftCenterBox.getChildren().add(profilePicPane);
+
+                // Add profile status
+                Label profileStatus = new Label(status);
+                profileStatus.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                leftCenterBox.getChildren().add(profileStatus);
+
+                centerSection.setMargin(rightCenterBox, new Insets(40, 0, 0, 70));
+                Label friendsText = new Label("Friends:");
+                friendsText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                rightCenterBox.setAlignment(Pos.TOP_LEFT);
+                rightCenterBox.getChildren().addAll(friendsText);
+
+                Label updatesBarText = new Label("New profile created");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+            } else {
+                Label updatesBarText = new Label("Profile already exists");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+            }
+        });
+
+        lookUpBtn.setOnAction(e -> { // ********************* Button to look up a profile *****************************
+            String name = nameTextField.getText(); // Get the name entered by the user
+            Person foundProfile = findProfile(name);
+            leftCenterBox.getChildren().clear();
+            bottomCenterBox.getChildren().clear();
+            rightCenterBox.getChildren().clear();
+            if (foundProfile != null ) {
+                // Clear previous content
+
+                // Add profile name
+                nameLabel.setText(foundProfile.getName());
+                nameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+                nameLabel.setTextFill(Color.BLUE);
+                leftCenterBox.getChildren().add(nameLabel);
+
+                // Add "No Image" preview or actual image if available
+                ImageView imageView = new ImageView(foundProfile.getImage());
+                profilePicPane.getChildren().clear();
+                profilePicPane.getChildren().add(imageView);
+                leftCenterBox.getChildren().add(profilePicPane);
+
+                // Add profile status
+                statusLabel.setText(foundProfile.getStatus());
+                statusLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                leftCenterBox.getChildren().add(statusLabel);
+
+                Label updatesBarText = new Label("Done");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+
+                centerSection.setMargin(rightCenterBox, new Insets(40, 0, 0, 70));
+                Label friendsText = new Label("Friends:");
+                friendsText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                rightCenterBox.setAlignment(Pos.TOP_LEFT);
+                rightCenterBox.getChildren().addAll(friendsText);
+
+                friendsList.getChildren().clear();
+                for (Person friend : foundProfile.getFriends()) {
+                    friendsList.getChildren().add(new Label(friend.getName()));
+                } rightCenterBox.getChildren().add(friendsList);
+
+            } else {
+                Label updatesBarText = new Label("A profile with name "+nameTextField.getText() +" does not exists");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+            }
+        });
+        changePicBtn.setOnAction(e -> {  //  **************************** Button to change the profile picture ***************************
+            String name = nameTextField.getText(); // Get the name entered by the user
+            Person foundProfile = findProfile(name);
+            String imagePath = changePicTextField.getText();
+
+            leftCenterBox.getChildren().clear();
+            bottomCenterBox.getChildren().clear();
+            rightCenterBox.getChildren().clear();
+            if (foundProfile != null && imagePath != null && !imagePath.isEmpty() ) {
+
+                nameLabel.setText(foundProfile.getName());
+                nameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+                nameLabel.setTextFill(Color.BLUE);
+                leftCenterBox.getChildren().add(nameLabel);
+
+                Image newImage = new Image(imagePath);
+                foundProfile.setImage(newImage);
+                ImageView imageView = new ImageView(newImage); // Rename this variable
+                profilePicPane.getChildren().clear();
+                profilePicPane.getChildren().add(imageView);
+                leftCenterBox.getChildren().add(profilePicPane);
+
+                // Add profile status
+                statusLabel.setText(foundProfile.getStatus());
+                statusLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                leftCenterBox.getChildren().add(statusLabel);
+
+                Label updatesBarText = new Label("Done");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+
+                centerSection.setMargin(rightCenterBox, new Insets(40, 0, 0, 70));
+                Label friendsText = new Label("Friends:");
+                friendsText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                rightCenterBox.setAlignment(Pos.TOP_LEFT);
+                rightCenterBox.getChildren().addAll(friendsText);
+
+                friendsList.getChildren().clear();
+                for (Person friend : foundProfile.getFriends()) {
+                friendsList.getChildren().add(new Label(friend.getName()));
+                } rightCenterBox.getChildren().add(friendsList);
+
+            } else {
+                Label updatesBarText = new Label("NO");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+            }
+        });
+        addFriendBtn.setOnAction(e -> {  // ******************** Button to add a friend to a profile ********************
+            String name = nameTextField.getText(); // Get the name entered by the user
+            Person foundProfile = findProfile(name);
+
+            String friendName = addFriendTextField.getText();
+            Person friendProfile = findProfile(friendName);
+
+            leftCenterBox.getChildren().clear();
+            bottomCenterBox.getChildren().clear();
+            rightCenterBox.getChildren().clear();
+            if (foundProfile != null && friendProfile != null) {
+
+                nameLabel.setText(foundProfile.getName());
+                nameLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+                nameLabel.setTextFill(Color.BLUE);
+                leftCenterBox.getChildren().add(nameLabel);
+
+                ImageView imageView = new ImageView(foundProfile.getImage());
+                profilePicPane.getChildren().clear();
+                profilePicPane.getChildren().add(imageView);
+                leftCenterBox.getChildren().add(profilePicPane);
+
+                // Add profile status
+                statusLabel.setText(foundProfile.getStatus());
+                statusLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                leftCenterBox.getChildren().add(statusLabel);
+
+                Label updatesBarText = new Label("Done");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+
+                centerSection.setMargin(rightCenterBox, new Insets(40, 0, 0, 70));
+                Label friendsText = new Label("Friends:");
+                friendsText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                rightCenterBox.setAlignment(Pos.TOP_LEFT);
 
 
+                friendsList.getChildren().clear();
+                foundProfile.addFriend(friendProfile);
+                for (Person friend : foundProfile.getFriends()) {
+                friendsList.getChildren().add(new Label(friend.getName()));
+                } rightCenterBox.getChildren().addAll(friendsText ,friendsList);
+
+
+            } else {
+                Label updatesBarText = new Label("NO");
+                updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+                bottomCenterBox.getChildren().addAll(updatesBarText);
+            }
+        });
 
         // **** bottomCenterBox Implementation ****
 
         // updates bar label
-        Label updatesBarText = new Label("NONE");
-        updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
-
-        bottomCenterBox.getChildren().addAll(updatesBarText);
-
-
 
         // **** rightCenterBox Implementation ****
         centerSection.setMargin(rightCenterBox, new Insets(40, 0, 0, 70));
@@ -180,10 +357,13 @@ public class App extends Application {
         Label friendsText = new Label("Friends:");
         friendsText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
 
+
+
         rightCenterBox.setAlignment(Pos.TOP_LEFT);
-        rightCenterBox.getChildren().addAll(friendsText);
+        centerSection.setCenter(rightCenterBox);
 
         // centerSection DONE!
+
 
 
 
@@ -200,6 +380,10 @@ public class App extends Application {
         launch(args);
     }
 
+
+
+
+
     // left bar construction submethod (helper method)
     public static void setLeftBarContents(VBox vbox, TextField txt, Button btn) {
         txt.setPrefWidth(200);
@@ -213,6 +397,7 @@ public class App extends Application {
     public static void noImgPreview(StackPane profilePic) {
 
         // rectangle as a frame
+
         Rectangle rect = new Rectangle(225, 225);
         rect.setFill(null);
         rect.setStroke(Color.BLACK);
@@ -224,6 +409,17 @@ public class App extends Application {
 
         profilePic.getChildren().clear(); // clear any other children
         profilePic.getChildren().addAll(rect, noImg);
+    }
+
+    private Person findProfile(String name) {   // Searching the profile by name tho the list
+        for (Person profile : Person.getUserProfiles()) {
+            if (profile.getName().equalsIgnoreCase(name)) {
+                return profile;
+            }
+
+
+        }
+        return null;
     }
 
 }
