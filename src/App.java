@@ -25,7 +25,7 @@ public class App extends Application {
     private Label statusLabel;
     private VBox friendsList;
     Label profileName;
-    Person activPerson;
+    Person foundProfile;
 
     @Override
     public void start(Stage primaryStage) {
@@ -169,6 +169,7 @@ public class App extends Application {
             bottomCenterBox.getChildren().clear();
             rightCenterBox.getChildren().clear();
             boolean isAdded = Person.addProfile(name, image, status);
+            foundProfile = findProfile(name);
 
 
             if (isAdded) {
@@ -199,6 +200,7 @@ public class App extends Application {
                 Label updatesBarText = new Label("New profile created");
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
+
             } else {
                 Label updatesBarText = new Label("Profile already exists");
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
@@ -208,7 +210,7 @@ public class App extends Application {
 
         lookUpBtn.setOnAction(e -> { // ********************* Button to look up a profile *****************************
             String name = nameTextField.getText(); // Get the name entered by the user
-            Person foundProfile = findProfile(name);
+            foundProfile = findProfile(name);
             leftCenterBox.getChildren().clear();
             bottomCenterBox.getChildren().clear();
             rightCenterBox.getChildren().clear();
@@ -252,8 +254,8 @@ public class App extends Application {
             }
         });
         changePicBtn.setOnAction(e -> {  //  **************************** Button to change the profile picture ***************************
-            String name = nameTextField.getText(); // Get the name entered by the user
-            Person foundProfile = findProfile(name);
+            //String name = nameTextField.getText(); // Get the name entered by the user
+            //Person foundProfile = findProfile(name);
             String imagePath = changePicTextField.getText();
 
             leftCenterBox.getChildren().clear();
@@ -277,7 +279,7 @@ public class App extends Application {
                 statusLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 leftCenterBox.getChildren().add(statusLabel);
 
-                Label updatesBarText = new Label("Done");
+                Label updatesBarText = new Label(foundProfile.getName() + " Profile Picture Has Been Changed");
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
 
@@ -325,7 +327,7 @@ public class App extends Application {
                 statusLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 leftCenterBox.getChildren().add(statusLabel);
 
-                Label updatesBarText = new Label("Done");
+                Label updatesBarText = new Label(friendProfile.getName() + " is Added as a Friend");
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
 
