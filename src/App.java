@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.scene.image.Image;
 
 public class App extends Application {
@@ -352,6 +353,32 @@ public class App extends Application {
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
             }
+        });
+
+        changeStatBtn.setOnAction(e -> {
+            String status = changeStatTextField.getText();
+            foundProfile.setStatus(status);
+
+            leftCenterBox.getChildren().clear();
+
+            profileName = new Label(foundProfile.getName());
+            profileName.setFont(Font.font("Segoe UI", FontWeight.BOLD, 30));
+            profileName.setTextFill(Color.BLUE);
+            leftCenterBox.getChildren().add(profileName);
+
+
+            setProfilePic(leftCenterBox, profilePicPane, foundProfile);
+
+
+
+            Text statusLabel = new Text(foundProfile.getStatus());
+
+            double wrapingWidth = 225;
+            statusLabel.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
+            statusLabel.setWrappingWidth(wrapingWidth);
+            leftCenterBox.getChildren().add(statusLabel);
+            
+            
         });
 
         // **** bottomCenterBox Implementation ****
