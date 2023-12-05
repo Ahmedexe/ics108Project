@@ -1,4 +1,4 @@
-
+//package com.example.demo7;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,7 @@ import java.util.List;
 public class Person {
 
     private static List<Person> userProfiles = new ArrayList<>();
-    public static List<Person> getUserProfiles() {
-        return userProfiles;
-    }
+    
     private String name;
     private Image image;
     private String status;
@@ -27,6 +25,9 @@ public class Person {
         this.friends = new ArrayList<>();
     }
 
+    public static List<Person> getUserProfiles() {
+        return userProfiles;
+    }
 
     public String getName() {
         return name;
@@ -67,6 +68,20 @@ public class Person {
             }
         }
     }
+    public void DelFriend () {
+        for (Person friend : new ArrayList<>(this.friends)) {
+            friend.getFriends().remove(this); // Remove this user from each friend's friend list
+        }
+
+    }
+
+    public void DelProfile(String name) {
+        for (int i = 0; i < userProfiles.size(); i++) {
+            if (userProfiles.get(i).getName().equals(name)) {
+                userProfiles.remove(i);
+            }
+        }
+    }
     public static boolean addProfile(String name, Image image, String status) {
         for (Person profile : userProfiles) {
             if (profile.getName().equals(name)) {
@@ -81,6 +96,3 @@ public class Person {
 
 
 }
-
-
-
