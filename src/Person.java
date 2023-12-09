@@ -75,7 +75,7 @@ public class Person {
 
     }
 
-    public void DelProfile(String name) {
+    public static void DelProfile(String name) {
         for (int i = 0; i < userProfiles.size(); i++) {
             if (userProfiles.get(i).getName().equals(name)) {
                 userProfiles.remove(i);
