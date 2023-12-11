@@ -347,15 +347,23 @@ public class App extends Application {
 
             
             } catch (IllegalArgumentException ex1) {
+
+
                 bottomCenterBox.getChildren().clear();
                 Label updatesBarText = new Label("Picture Path is Invalid");
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
+
+
             } catch (NoProfileChosenException ex2) {
+
+
                 bottomCenterBox.getChildren().clear();
                 Label updatesBarText = new Label(ex2.getMessage());
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
+
+                
             }
         });  
         
@@ -515,6 +523,7 @@ public class App extends Application {
                 foundProfile = null;
 
             } else {
+                bottomCenterBox.getChildren().clear();
                 Label updatesBarText = new Label(" A profile with name "+ nameTextField.getText()+" does not exist");
                 updatesBarText.setFont(Font.font("Segoe UI", FontWeight.BOLD, 15));
                 bottomCenterBox.getChildren().addAll(updatesBarText);
