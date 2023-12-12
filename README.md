@@ -7,11 +7,10 @@ FaceLite is a JavaFX-based social media mimic app that provides users with a sim
 ## Table of Contents
 
 1. [Installation](#installation)
-2. [Usage](#usage)
-3. [Configuration](#configuration)
-4. [Credits](#credits)
-5. [Documentation](#documentation)
-6. [Contact Information](#contact-information)
+2. [Technologies used](#technologies-used)
+3. [Design Overview](#design-overview)
+4. [Usage](#usage)
+5. [Contact Information](#contact-information)
 
 ## Installation
 
