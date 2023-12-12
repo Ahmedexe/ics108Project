@@ -41,10 +41,83 @@ cd ics108Project
 6. **Alternatively, use an IDE:**
 - If you're using an Integrated Development Environment (IDE) like IntelliJ or Eclipse, import the FaceLite project and run the `App` class.
 
+## Technologies used
+
+List of technologies/frameworks/tools used in FaceLite:
+
+- Java
+- JavaFX
+- Visual Studio Code (VSCode) - IDE for development (Optional)
+  - [Download VSCode](https://code.visualstudio.com/)
+  - Java Extension Pack - Install the Java Extension Pack for Java development in VSCode
+- IntelliJ IDEA - IDE for development (Optional)
+  - [Download IntelliJ IDEA](https://www.jetbrains.com/idea/)
+
+
 ## Usage
 
 - Upon launching FaceLite, you will be presented with a GUI that allows you to create profiles and perform profile-specific tasks.
-- Once a profile is created, you can select it and perform various tasks using the provided buttons.
+- Once a profile is created, you can select it and perform various tasks using the provided buttons including:
+  - Adding a Profile Picture
+  - Adding a Status
+  - Adding Friends
+
+
+## Design Overview
+
+### 1. App.java
+
+The `App` class serves as the main class for FaceLite. It initializes the JavaFX GUI, manages button functionality, and acts as the entry point for the app.
+
+### 2. Person.java
+
+The `Person` class represents individual profiles within FaceLite. It encapsulates profile information and defines methods for managing user profiles and their interactions.
+
+#### Variables
+
+- `name`: Represents the name of the person.
+- `image`: Represents the image associated with the person.
+- `status`: Represents the status or description of the person.
+- `friends`: Represents the list of friends associated with the person.
+- `userProfiles` (static): Represents the list of all user profiles.
+
+#### Constructors
+
+- `Person()`: Default constructor initializing the `friends` list.
+- `Person(String name, Image image, String status)`: Constructor with parameters for creating a person with specified details.
+
+#### Getters and Setters
+
+- Getters (`getName()`, `getImage()`, `getStatus()`, `getFriends()`, `getUserProfiles()`): Retrieve the values of the corresponding variables.
+- Setters (`setName()`, `setImage()`, `setStatus()`): Set the values of the corresponding variables.
+
+#### Methods
+
+- `addFriend(Person friend)`: Adds a friend to the person's friends list and ensures mutual friendship.
+- `DelFriend()`: Removes this person from the friends list of all friends.
+- `DelProfile(String name)`: Removes a user profile by name.
+- `addProfile(String name, Image image, String status)`: Adds a new user profile if a profile with the same name does not exist.
+
+
+### 3. NoProfileChosenException.java
+
+The `NoProfileChosenException` class is an exception thrown when a profile-specific task is attempted without selecting a profile.
+
+### 4. EmptyTextFieldException.java
+
+The `NoProfileChosenException` class extends `Exception` and is used to handle exceptions when a profile-specific task is attempted without selecting a profile.
+
+#### Constructors
+
+- `NoProfileChosenException()`: Default constructor with a predefined message "No Profile Has Been Chosen to Do the Specified Task."
+- `NoProfileChosenException(String s)`: Constructor that allows customizing the exception message.
+
+
+#### Constructor
+
+- `EmptyTextFieldException()`: Default constructor with a predefined message "Please Fill the Text Field."
+- `EmptyTextFieldException(String s)`: Constructor that allows customizing the exception message.
+
 
 **Interface Example:**
 [!Interface Pic](interface.png)
@@ -53,21 +126,6 @@ cd ics108Project
 
 [!Modified profile](profileExample.png)
 
-
-
-## Configuration
-
-No specific configuration settings are required for FaceLite.
-
-## Credits
-
-- JavaFX: The application uses the JavaFX library for creating the graphical user interface. Explore the [JavaFX Documentation](https://openjfx.io/).
-- Java Programming: For additional Java programming resources, visit [GeeksforGeeks](https://www.geeksforgeeks.org/java/).
-- Stack Overflow: Seek help or contribute to discussions on [Stack Overflow](https://stackoverflow.com/).
-
-## Documentation
-
-Additional documentation for FaceLite can be found [here](https://blackboard.kfupm.edu.sa/bbcswebdav/pid-2201761-dt-content-rid-26297456_1/courses/231-ICS-108-spl-garout/FaceLite.pdf).
 
 ## Contact Information
 

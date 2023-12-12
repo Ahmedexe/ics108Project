@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Person {
 
+    //  arrayList to keep track of people stored
     private static List<Person> userProfiles = new ArrayList<>();
     
     private String name;
